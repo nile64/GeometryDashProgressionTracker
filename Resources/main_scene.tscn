@@ -15,8 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://gy25wtdwv25j" path="res://Sprites/plusButtonHover.png" id="11_0v4gj"]
 [ext_resource type="Texture2D" uid="uid://chxe714lavkvs" path="res://Sprites/plusButtonPress.png" id="12_xd0le"]
 
-[node name="Node" type="Node"]
+[node name="NodeRoot" type="Node"]
 script = ExtResource("1_ldykk")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="BackgroundElements" type="Node2D" parent="."]
 modulate = Color(1, 0.5, 0.5, 1)
@@ -148,5 +150,15 @@ offset_top = 613.0
 offset_right = 1047.0
 offset_bottom = 624.0
 text = "this button doesnt work yet ->"
+
+[node name="LinkButton" type="LinkButton" parent="UI"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 4.0
+offset_right = 1139.0
+offset_bottom = 21.0
+theme_override_font_sizes/font_size = 20
+text = "Click here to Update! (Installed: oldversion, Latest: newver)"
+uri = "https://github.com/nile64/GeometryDashProgressionTracker/releases/latest/"
 
 [connection signal="button_down" from="UI/Panel/BorderTop/CreditsButton" to="." method="_open_credits_window"]

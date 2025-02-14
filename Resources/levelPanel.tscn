@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c25leqlcyyow"]
+[gd_scene load_steps=4 format=3 uid="uid://c25leqlcyyow"]
 
 [ext_resource type="Theme" uid="uid://doj8yf6w2enyc" path="res://Resources/maintheme.tres" id="1_tbqth"]
+[ext_resource type="Script" path="res://Scripts/level_panel.gd" id="2_3hfg4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62h6"]
 bg_color = Color(0, 0, 0, 0)
@@ -10,6 +11,7 @@ anchors_preset = -1
 anchor_right = 0.685764
 anchor_bottom = 0.231481
 theme = ExtResource("1_tbqth")
+script = ExtResource("2_3hfg4")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
@@ -34,3 +36,6 @@ offset_top = 60.0
 offset_right = 770.0
 offset_bottom = 140.0
 placeholder_text = "write runs here..."
+
+[connection signal="text_changed" from="Panel/LineEdit" to="." method="_on_change_title"]
+[connection signal="text_changed" from="Panel/TextEdit" to="." method="_on_text_edit_text_changed"]
