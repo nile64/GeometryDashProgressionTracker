@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://c25leqlcyyow"]
+
+[ext_resource type="Theme" uid="uid://doj8yf6w2enyc" path="res://Resources/maintheme.tres" id="1_tbqth"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62h6"]
+bg_color = Color(0, 0, 0, 0)
+
+[node name="levelPanel" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.685764
+anchor_bottom = 0.231481
+theme = ExtResource("1_tbqth")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x62h6")
+
+[node name="LineEdit" type="LineEdit" parent="Panel"]
+layout_mode = 2
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 770.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Level Name..."
+alignment = 1
+max_length = 24
+
+[node name="TextEdit" type="TextEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 770.0
+offset_bottom = 140.0
+placeholder_text = "write runs here..."

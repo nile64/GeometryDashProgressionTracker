@@ -1,0 +1,179 @@
+[gd_scene load_steps=11 format=3 uid="uid://dcqtexbvw4xps"]
+
+[ext_resource type="Script" path="res://Scripts/window.gd" id="1_sbd8q"]
+[ext_resource type="Texture2D" uid="uid://bhn76rcevg1s3" path="res://Sprites/game_bg_01_001-uhd.png" id="2_5x7pw"]
+[ext_resource type="Script" path="res://Scripts/background_elements.gd" id="2_n4wmd"]
+[ext_resource type="Theme" uid="uid://doj8yf6w2enyc" path="res://Resources/maintheme.tres" id="3_nxaru"]
+[ext_resource type="Texture2D" uid="uid://2lcs6a3e8tsa" path="res://Sprites/panelBorderSide.png" id="4_6ol6t"]
+[ext_resource type="LabelSettings" uid="uid://8sdp23gtskpt" path="res://Resources/smallLabel.tres" id="4_dl10r"]
+[ext_resource type="Texture2D" uid="uid://dnjtbfispmldw" path="res://Sprites/panelBorderTop.png" id="5_203fr"]
+[ext_resource type="LabelSettings" uid="uid://dibbiehsi0kw0" path="res://Resources/tinyLabel.tres" id="5_614pv"]
+[ext_resource type="LabelSettings" uid="uid://tircdhg873h0" path="res://Resources/bigLabel.tres" id="6_aacev"]
+[ext_resource type="Texture2D" uid="uid://bwro8ycdm8ur" path="res://Sprites/panelBorderBottom.png" id="6_n13d7"]
+
+[node name="CreditsWindow" type="Window"]
+auto_translate_mode = 1
+title = "Credits"
+initial_position = 1
+size = Vector2i(1152, 648)
+script = ExtResource("1_sbd8q")
+
+[node name="BackgroundElements" type="Node2D" parent="."]
+script = ExtResource("2_n4wmd")
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundElements"]
+position = Vector2(576, 324)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_5x7pw")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nxaru")
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.130208
+anchor_top = 0.114198
+anchor_right = 0.869792
+anchor_bottom = 0.885802
+offset_top = 25.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Dev" type="HSeparator" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Developer"
+label_settings = ExtResource("4_dl10r")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "nile64"
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
+[node name="Contributors" type="HSeparator" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Contributors"
+label_settings = ExtResource("4_dl10r")
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "none yet..."
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
+[node name="Sprites" type="HSeparator" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sprites"
+label_settings = ExtResource("4_dl10r")
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "nile64"
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
+[node name="Label7" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "RobTop"
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
+[node name="Special Thanks" type="HSeparator" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Special Thanks"
+label_settings = ExtResource("4_dl10r")
+horizontal_alignment = 1
+
+[node name="Label9" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Robtop"
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
+[node name="Label10" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "The Kreo"
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
+[node name="Extra Bar" type="HSeparator" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BorderSide1" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(13, 213)
+scale = Vector2(0.562, 2)
+texture = ExtResource("4_6ol6t")
+
+[node name="BorderSide2" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(839, 213)
+rotation = 3.14159
+scale = Vector2(0.562, 2)
+texture = ExtResource("4_6ol6t")
+
+[node name="BorderTop" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(426, -35)
+scale = Vector2(0.562, 0.562)
+texture = ExtResource("5_203fr")
+
+[node name="Label" type="Label" parent="UI/Panel/BorderTop"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1043.5
+offset_top = -102.455
+offset_right = -532.5
+offset_bottom = -22.455
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_nxaru")
+text = "Credits"
+label_settings = ExtResource("6_aacev")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BorderBottom" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(426, 480)
+scale = Vector2(0.562, 0.562)
+texture = ExtResource("6_n13d7")
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]

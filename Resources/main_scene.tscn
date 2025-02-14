@@ -1,0 +1,152 @@
+[gd_scene load_steps=15 format=3 uid="uid://lkth4rrqrds2"]
+
+[ext_resource type="Texture2D" uid="uid://bhn76rcevg1s3" path="res://Sprites/game_bg_01_001-uhd.png" id="1_jji66"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_ldykk"]
+[ext_resource type="Theme" uid="uid://doj8yf6w2enyc" path="res://Resources/maintheme.tres" id="2_24mfm"]
+[ext_resource type="Script" path="res://Scripts/background_elements.gd" id="2_b0w3y"]
+[ext_resource type="Texture2D" uid="uid://2lcs6a3e8tsa" path="res://Sprites/panelBorderSide.png" id="3_nysbe"]
+[ext_resource type="PackedScene" uid="uid://c25leqlcyyow" path="res://Resources/levelPanel.tscn" id="4_753en"]
+[ext_resource type="Texture2D" uid="uid://dnjtbfispmldw" path="res://Sprites/panelBorderTop.png" id="4_umt1d"]
+[ext_resource type="Texture2D" uid="uid://bwro8ycdm8ur" path="res://Sprites/panelBorderBottom.png" id="5_0q2w3"]
+[ext_resource type="LabelSettings" uid="uid://cty4k8v0bldri" path="res://Resources/mainLabelSettings.tres" id="5_e0845"]
+[ext_resource type="Texture2D" uid="uid://cgqy5wqacyjev" path="res://Sprites/logowithtext.png" id="6_cg7bv"]
+[ext_resource type="PackedScene" uid="uid://dcqtexbvw4xps" path="res://Resources/credits_window.tscn" id="8_ktpqu"]
+[ext_resource type="Texture2D" uid="uid://b577htyck6np1" path="res://Sprites/plusButton.png" id="10_qaiti"]
+[ext_resource type="Texture2D" uid="uid://gy25wtdwv25j" path="res://Sprites/plusButtonHover.png" id="11_0v4gj"]
+[ext_resource type="Texture2D" uid="uid://chxe714lavkvs" path="res://Sprites/plusButtonPress.png" id="12_xd0le"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_ldykk")
+
+[node name="BackgroundElements" type="Node2D" parent="."]
+modulate = Color(1, 0.5, 0.5, 1)
+script = ExtResource("2_b0w3y")
+
+[node name="Background" type="Sprite2D" parent="BackgroundElements"]
+position = Vector2(576, 324)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_jji66")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_24mfm")
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.130208
+anchor_top = 0.152778
+anchor_right = 0.869792
+anchor_bottom = 0.847222
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0363849
+anchor_right = 0.963614
+anchor_bottom = 1.0
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 150
+
+[node name="levelPanel" parent="UI/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("4_753en")]
+layout_mode = 2
+
+[node name="BorderSide1" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(13, 213)
+scale = Vector2(0.562, 2)
+texture = ExtResource("3_nysbe")
+
+[node name="BorderSide2" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(839, 213)
+rotation = 3.14159
+scale = Vector2(0.562, 2)
+texture = ExtResource("3_nysbe")
+
+[node name="BorderTop" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(426, -35)
+scale = Vector2(0.562, 0.562)
+texture = ExtResource("4_umt1d")
+
+[node name="Label" type="Label" parent="UI/Panel/BorderTop"]
+offset_left = 309.609
+offset_right = 641.609
+offset_bottom = 41.0
+theme = ExtResource("2_24mfm")
+text = "by Nile64"
+label_settings = ExtResource("5_e0845")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsButton" type="TextureButton" parent="UI/Panel/BorderTop"]
+anchors_preset = -1
+anchor_left = 0.361129
+anchor_top = 0.0614216
+anchor_right = 0.638731
+anchor_bottom = 0.906492
+offset_left = -788.0
+offset_top = -71.0
+offset_right = -525.5
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.625, 0.625)
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("2_24mfm")
+texture_normal = ExtResource("6_cg7bv")
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="CreditsWindow" parent="UI/Panel/BorderTop/CreditsButton" instance=ExtResource("8_ktpqu")]
+visible = false
+
+[node name="Button" type="Button" parent="UI/Panel/BorderTop"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="BorderBottom" type="Sprite2D" parent="UI/Panel"]
+position = Vector2(426, 480)
+scale = Vector2(0.562, 0.562)
+texture = ExtResource("5_0q2w3")
+
+[node name="TextureButton" type="TextureButton" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -107.0
+offset_right = 77.0
+offset_bottom = 76.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("10_qaiti")
+texture_pressed = ExtResource("12_xd0le")
+texture_hover = ExtResource("11_0v4gj")
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 777.0
+offset_top = 613.0
+offset_right = 1047.0
+offset_bottom = 624.0
+text = "this button doesnt work yet ->"
+
+[connection signal="button_down" from="UI/Panel/BorderTop/CreditsButton" to="." method="_open_credits_window"]
