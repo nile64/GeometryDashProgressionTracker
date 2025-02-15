@@ -22,7 +22,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_x62h6")
 layout_mode = 2
 offset_left = 20.0
 offset_top = 10.0
-offset_right = 770.0
+offset_right = 660.0
 offset_bottom = 50.0
 theme_override_font_sizes/font_size = 32
 placeholder_text = "Level Name..."
@@ -37,5 +37,14 @@ offset_right = 770.0
 offset_bottom = 140.0
 placeholder_text = "write runs here..."
 
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 670.0
+offset_top = 10.0
+offset_right = 770.0
+offset_bottom = 50.0
+text = "remove lvl"
+
 [connection signal="text_changed" from="Panel/LineEdit" to="." method="_on_change_title"]
 [connection signal="text_changed" from="Panel/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="Panel/Button" to="." method="_remove_level"]

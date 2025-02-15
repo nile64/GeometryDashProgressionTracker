@@ -1,8 +1,12 @@
 extends Node
 
 var defaultSave = {
-	"level_name": "",
-	"runs": ""
+	"levels": [
+		{
+			"level_name": "",
+			"runs": ""
+		}
+	]
 }
 
 var data = {}
@@ -13,9 +17,15 @@ func _ready():
 	check_for_update()
 	
 	data = load_file()
+	if data["levels"] == []:
+		data = defaultSave
+		save_file(data)
 	
-	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/Panel/LineEdit.text = data["level_name"]
-	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/Panel/TextEdit.text = data["runs"]
+	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/Panel/LineEdit.text = data["levels"][0].level_name
+	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/Panel/TextEdit.text = data["levels"][0].runs
+	
+	for i in range(1, data["levels"].size()):
+		_add_level_at_beginning(i)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,3 +67,24 @@ func _on_request_completed(result, response_code, headers, body):
 	if json["name"] != ProjectSettings.get_setting("application/config/version"):
 		$UI/LinkButton.show()
 		$UI/LinkButton.text = "Click here to Update! (Installed: " + ProjectSettings.get_setting("application/config/version") + ", Latest: " + json["name"] + ")"
+
+func _add_level():
+	var lvlPanel = $UI/Panel/ScrollContainer/VBoxContainer/levelPanel.duplicate()
+	$UI/Panel/ScrollContainer/VBoxContainer.add_child(lvlPanel)
+	lvlPanel.get_node("Panel").get_node("LineEdit").text = ""
+	lvlPanel.get_node("Panel").get_node("TextEdit").text = ""
+	
+	lvlPanel.panel_number = data["levels"].size()
+	data["levels"].append({"level_name":"", "runs":""})
+	
+	save_file(data)
+
+func _add_level_at_beginning(panel_num : int):
+	var lvlPanel = $UI/Panel/ScrollContainer/VBoxContainer/levelPanel.duplicate()
+	$UI/Panel/ScrollContainer/VBoxContainer.add_child(lvlPanel)
+	lvlPanel.get_node("Panel").get_node("LineEdit").text = data["levels"][panel_num].level_name
+	lvlPanel.get_node("Panel").get_node("TextEdit").text = data["levels"][panel_num].runs
+	
+	lvlPanel.panel_number = panel_num
+	
+	save_file(data)
