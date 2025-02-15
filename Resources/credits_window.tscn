@@ -134,6 +134,12 @@ text = "The Kreo"
 label_settings = ExtResource("5_614pv")
 horizontal_alignment = 1
 
+[node name="Label11" type="Label" parent="UI/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "CurtaGD"
+label_settings = ExtResource("5_614pv")
+horizontal_alignment = 1
+
 [node name="Extra Bar" type="HSeparator" parent="UI/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 

@@ -12,7 +12,7 @@ config_version=5
 
 config/name="GD Progression Tracker"
 config/description="Track your GD Projects! Tool I made cuz i was bored. Track progress on levels you are attempting to beat, track progress on levels you are building, and other stuff if I feel like adding it lol."
-config/version="beta02142025-2"
+config/version="beta02152025-1"
 run/main_scene="res://Resources/main_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/image="res://Sprites/icon.png"

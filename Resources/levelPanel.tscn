@@ -1,26 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://c25leqlcyyow"]
+[gd_scene load_steps=7 format=3 uid="uid://c25leqlcyyow"]
 
 [ext_resource type="Theme" uid="uid://doj8yf6w2enyc" path="res://Resources/maintheme.tres" id="1_tbqth"]
 [ext_resource type="Script" path="res://Scripts/level_panel.gd" id="2_3hfg4"]
+[ext_resource type="Texture2D" uid="uid://cbv7eeygh8svm" path="res://Difficulties/extremeDemon.png" id="3_ekqmf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lq3u"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62h6"]
 bg_color = Color(0, 0, 0, 0)
 
-[node name="levelPanel" type="PanelContainer"]
-anchors_preset = -1
-anchor_right = 0.685764
-anchor_bottom = 0.231481
-theme = ExtResource("1_tbqth")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h8vlg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="levelPanel" type="Control"]
+layout_mode = 3
+anchor_right = 0.684896
+anchor_bottom = 0.771605
+size_flags_vertical = 3
 script = ExtResource("2_3hfg4")
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="."]
+[node name="mainPanel" type="PanelContainer" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 0.3
+theme = ExtResource("1_tbqth")
+theme_override_styles/panel = SubResource("StyleBoxFlat_0lq3u")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="mainPanel"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_x62h6")
 
-[node name="LineEdit" type="LineEdit" parent="Panel"]
+[node name="LineEdit" type="LineEdit" parent="mainPanel/Panel"]
 layout_mode = 2
-offset_left = 20.0
+offset_left = 180.0
 offset_top = 10.0
 offset_right = 660.0
 offset_bottom = 50.0
@@ -29,15 +44,15 @@ placeholder_text = "Level Name..."
 alignment = 1
 max_length = 24
 
-[node name="TextEdit" type="TextEdit" parent="Panel"]
+[node name="TextEdit" type="TextEdit" parent="mainPanel/Panel"]
 layout_mode = 0
-offset_left = 20.0
+offset_left = 180.0
 offset_top = 60.0
-offset_right = 770.0
+offset_right = 660.0
 offset_bottom = 140.0
 placeholder_text = "write runs here..."
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="Button" type="Button" parent="mainPanel/Panel"]
 layout_mode = 0
 offset_left = 670.0
 offset_top = 10.0
@@ -45,6 +60,56 @@ offset_right = 770.0
 offset_bottom = 50.0
 text = "remove lvl"
 
-[connection signal="text_changed" from="Panel/LineEdit" to="." method="_on_change_title"]
-[connection signal="text_changed" from="Panel/TextEdit" to="." method="_on_text_edit_text_changed"]
-[connection signal="pressed" from="Panel/Button" to="." method="_remove_level"]
+[node name="Button2" type="Button" parent="mainPanel/Panel"]
+visible = false
+offset_left = 670.0
+offset_top = 60.0
+offset_right = 770.0
+offset_bottom = 140.0
+text = "dropdown"
+
+[node name="TextureRect" type="TextureRect" parent="mainPanel/Panel"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 192.0
+offset_bottom = 157.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_ekqmf")
+
+[node name="DropdownPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+theme = ExtResource("1_tbqth")
+theme_override_styles/panel = SubResource("StyleBoxFlat_h8vlg")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="DropdownPanel"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x62h6")
+
+[node name="TextureRect2" type="TextureRect" parent="DropdownPanel/Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 239.0
+offset_right = 1036.0
+offset_bottom = 372.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_ekqmf")
+
+[node name="Button3" type="Button" parent="DropdownPanel/Panel"]
+offset_left = 670.0
+offset_top = 10.0
+offset_right = 770.0
+offset_bottom = 90.0
+text = "close"
+
+[connection signal="text_changed" from="mainPanel/Panel/LineEdit" to="." method="_on_change_title"]
+[connection signal="text_changed" from="mainPanel/Panel/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="mainPanel/Panel/Button" to="." method="_remove_level"]
+[connection signal="pressed" from="mainPanel/Panel/Button2" to="." method="_dropdown_panel"]
+[connection signal="pressed" from="DropdownPanel/Panel/Button3" to="." method="_undrop_panel"]

@@ -21,8 +21,8 @@ func _ready():
 		data = defaultSave
 		save_file(data)
 	
-	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/Panel/LineEdit.text = data["levels"][0].level_name
-	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/Panel/TextEdit.text = data["levels"][0].runs
+	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/mainPanel/Panel/LineEdit.text = data["levels"][0].level_name
+	$UI/Panel/ScrollContainer/VBoxContainer/levelPanel/mainPanel/Panel/TextEdit.text = data["levels"][0].runs
 	
 	for i in range(1, data["levels"].size()):
 		_add_level_at_beginning(i)
@@ -69,10 +69,17 @@ func _on_request_completed(result, response_code, headers, body):
 		$UI/LinkButton.text = "Click here to Update! (Installed: " + ProjectSettings.get_setting("application/config/version") + ", Latest: " + json["name"] + ")"
 
 func _add_level():
-	var lvlPanel = $UI/Panel/ScrollContainer/VBoxContainer/levelPanel.duplicate()
+	var lvlPanel
+	if has_node("UI/Panel/ScrollContainer/VBoxContainer/levelPanel"):
+		lvlPanel = $UI/Panel/ScrollContainer/VBoxContainer/levelPanel.duplicate()
+	elif has_node("UI/Panel/ScrollContainer/VBoxContainer/levelPanel2"):
+		lvlPanel = $UI/Panel/ScrollContainer/VBoxContainer/levelPanel2.duplicate()
+	else:
+		print("cannot add level")
 	$UI/Panel/ScrollContainer/VBoxContainer.add_child(lvlPanel)
-	lvlPanel.get_node("Panel").get_node("LineEdit").text = ""
-	lvlPanel.get_node("Panel").get_node("TextEdit").text = ""
+	lvlPanel.name = "levelPanel"
+	lvlPanel.get_node("mainPanel").get_node("Panel").get_node("LineEdit").text = ""
+	lvlPanel.get_node("mainPanel").get_node("Panel").get_node("TextEdit").text = ""
 	
 	lvlPanel.panel_number = data["levels"].size()
 	data["levels"].append({"level_name":"", "runs":""})
@@ -82,8 +89,8 @@ func _add_level():
 func _add_level_at_beginning(panel_num : int):
 	var lvlPanel = $UI/Panel/ScrollContainer/VBoxContainer/levelPanel.duplicate()
 	$UI/Panel/ScrollContainer/VBoxContainer.add_child(lvlPanel)
-	lvlPanel.get_node("Panel").get_node("LineEdit").text = data["levels"][panel_num].level_name
-	lvlPanel.get_node("Panel").get_node("TextEdit").text = data["levels"][panel_num].runs
+	lvlPanel.get_node("mainPanel").get_node("Panel").get_node("LineEdit").text = data["levels"][panel_num].level_name
+	lvlPanel.get_node("mainPanel").get_node("Panel").get_node("TextEdit").text = data["levels"][panel_num].runs
 	
 	lvlPanel.panel_number = panel_num
 	
