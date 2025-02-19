@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://lkth4rrqrds2"]
+[gd_scene load_steps=19 format=3 uid="uid://lkth4rrqrds2"]
 
 [ext_resource type="Texture2D" uid="uid://bhn76rcevg1s3" path="res://Sprites/game_bg_01_001-uhd.png" id="1_jji66"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_ldykk"]
 [ext_resource type="Theme" uid="uid://doj8yf6w2enyc" path="res://Resources/maintheme.tres" id="2_24mfm"]
 [ext_resource type="Script" path="res://Scripts/background_elements.gd" id="2_b0w3y"]
 [ext_resource type="Texture2D" uid="uid://2lcs6a3e8tsa" path="res://Sprites/panelBorderSide.png" id="3_nysbe"]
-[ext_resource type="PackedScene" uid="uid://c25leqlcyyow" path="res://Resources/levelPanel.tscn" id="4_753en"]
 [ext_resource type="Texture2D" uid="uid://dnjtbfispmldw" path="res://Sprites/panelBorderTop.png" id="4_umt1d"]
 [ext_resource type="Texture2D" uid="uid://bwro8ycdm8ur" path="res://Sprites/panelBorderBottom.png" id="5_0q2w3"]
 [ext_resource type="LabelSettings" uid="uid://cty4k8v0bldri" path="res://Resources/mainLabelSettings.tres" id="5_e0845"]
@@ -13,7 +12,30 @@
 [ext_resource type="PackedScene" uid="uid://dcqtexbvw4xps" path="res://Resources/credits_window.tscn" id="8_ktpqu"]
 [ext_resource type="Texture2D" uid="uid://b577htyck6np1" path="res://Sprites/plusButton.png" id="10_qaiti"]
 [ext_resource type="Texture2D" uid="uid://gy25wtdwv25j" path="res://Sprites/plusButtonHover.png" id="11_0v4gj"]
+[ext_resource type="Texture2D" uid="uid://cbv7eeygh8svm" path="res://Difficulties/extremeDemon.png" id="11_by1pi"]
 [ext_resource type="Texture2D" uid="uid://chxe714lavkvs" path="res://Sprites/plusButtonPress.png" id="12_xd0le"]
+[ext_resource type="Script" path="res://Scripts/level_button.gd" id="15_meqs7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgdhk"]
+content_margin_left = 5.0
+content_margin_top = 15.0
+content_margin_right = 5.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdn0g"]
+content_margin_left = 5.0
+content_margin_top = 15.0
+content_margin_right = 5.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ycj46"]
+content_margin_left = 5.0
+content_margin_top = 15.0
+content_margin_right = 5.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.470588)
 
 [node name="NodeRoot" type="Node"]
 script = ExtResource("1_ldykk")
@@ -45,42 +67,27 @@ anchor_left = 0.130208
 anchor_top = 0.152778
 anchor_right = 0.869792
 anchor_bottom = 0.847222
+offset_left = 125.0
+offset_top = -0.000144958
+offset_right = 62.9996
+offset_bottom = 0.000183105
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0363849
-anchor_right = 0.963614
-anchor_bottom = 1.0
-offset_bottom = 3.05176e-05
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 150
-
-[node name="levelPanel" parent="UI/Panel/ScrollContainer/VBoxContainer" instance=ExtResource("4_753en")]
-layout_mode = 2
 
 [node name="BorderSide1" type="Sprite2D" parent="UI/Panel"]
-position = Vector2(13, 213)
+position = Vector2(-18, 213)
 scale = Vector2(0.562, 2)
 texture = ExtResource("3_nysbe")
 
 [node name="BorderSide2" type="Sprite2D" parent="UI/Panel"]
-position = Vector2(839, 213)
+position = Vector2(808, 213)
 rotation = 3.14159
 scale = Vector2(0.562, 2)
 texture = ExtResource("3_nysbe")
 
 [node name="BorderTop" type="Sprite2D" parent="UI/Panel"]
-position = Vector2(426, -35)
+position = Vector2(395, -35)
 scale = Vector2(0.562, 0.562)
 texture = ExtResource("4_umt1d")
 
@@ -121,9 +128,56 @@ offset_right = 8.0
 offset_bottom = 8.0
 
 [node name="BorderBottom" type="Sprite2D" parent="UI/Panel"]
-position = Vector2(426, 480)
+position = Vector2(395, 480)
 scale = Vector2(0.562, 0.562)
 texture = ExtResource("5_0q2w3")
+
+[node name="LineEdit" type="LineEdit" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 175.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+placeholder_text = "Level Name"
+alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 75.0
+offset_right = 775.0
+offset_bottom = 325.0
+placeholder_text = "write runs here..."
+
+[node name="Button" type="Button" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 339.0
+offset_right = 775.0
+offset_bottom = 368.0
+text = "remove level"
+
+[node name="TextureRect" type="TextureRect" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 184.0
+offset_bottom = 149.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("11_by1pi")
+
+[node name="CheckBox" type="CheckBox" parent="UI/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = 121.0
+offset_right = 140.0
+offset_bottom = 145.0
+text = "Completed"
 
 [node name="TextureButton" type="TextureButton" parent="UI"]
 layout_mode = 1
@@ -132,9 +186,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -106.0
+offset_left = -1127.0
 offset_top = -107.0
-offset_right = 77.0
+offset_right = -944.0
 offset_bottom = 76.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -153,5 +207,37 @@ theme_override_font_sizes/font_size = 20
 text = "Click here to Update! (Installed: oldversion, Latest: newver)"
 uri = "https://github.com/nile64/GeometryDashProgressionTracker/releases/latest/"
 
+[node name="LevelsList" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 75.0
+offset_right = 220.0
+offset_bottom = 525.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelsList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="levelButton" type="Button" parent="UI/LevelsList/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_wgdhk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kdn0g")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ycj46")
+text = "Level Name"
+autowrap_mode = 3
+script = ExtResource("15_meqs7")
+
 [connection signal="button_down" from="UI/Panel/BorderTop/CreditsButton" to="." method="_open_credits_window"]
+[connection signal="text_changed" from="UI/Panel/LineEdit" to="." method="_on_change_title"]
+[connection signal="text_changed" from="UI/Panel/TextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="UI/Panel/Button" to="." method="_remove_level"]
+[connection signal="pressed" from="UI/Panel/CheckBox" to="." method="_on_complete_check_box_pressed"]
 [connection signal="pressed" from="UI/TextureButton" to="." method="_add_level"]
+[connection signal="pressed" from="UI/LevelsList/VBoxContainer/levelButton" to="UI/LevelsList/VBoxContainer/levelButton" method="_on_press"]

@@ -56,12 +56,13 @@ placeholder_text = "write runs here..."
 layout_mode = 0
 offset_left = 670.0
 offset_top = 10.0
-offset_right = 770.0
+offset_right = 780.0
 offset_bottom = 50.0
 text = "remove lvl"
 
 [node name="Button2" type="Button" parent="mainPanel/Panel"]
 visible = false
+layout_mode = 0
 offset_left = 670.0
 offset_top = 60.0
 offset_right = 770.0
@@ -102,6 +103,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_ekqmf")
 
 [node name="Button3" type="Button" parent="DropdownPanel/Panel"]
+layout_mode = 0
 offset_left = 670.0
 offset_top = 10.0
 offset_right = 770.0
