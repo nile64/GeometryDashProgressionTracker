@@ -132,7 +132,19 @@ position = Vector2(395, 480)
 scale = Vector2(0.562, 0.562)
 texture = ExtResource("5_0q2w3")
 
-[node name="LineEdit" type="LineEdit" parent="UI/Panel"]
+[node name="TextureRect" type="TextureRect" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0101266
+anchor_top = 0.0244444
+anchor_right = 0.208861
+anchor_bottom = 0.264444
+texture = ExtResource("11_by1pi")
+expand_mode = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelName" type="LineEdit" parent="UI/Panel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -145,39 +157,120 @@ theme_override_font_sizes/font_size = 50
 placeholder_text = "Level Name"
 alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="UI/Panel"]
+[node name="Creators" type="LineEdit" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 225.0
+offset_top = 69.0
+offset_right = -15.0004
+offset_bottom = 104.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+placeholder_text = "Creator"
+
+[node name="CreatorByLabel" type="Label" parent="UI/Panel/Creators"]
+layout_mode = 0
+offset_left = -48.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 30
+text = "By"
+
+[node name="Runs" type="TextEdit" parent="UI/Panel"]
 layout_mode = 0
 offset_left = 175.0
-offset_top = 75.0
-offset_right = 775.0
-offset_bottom = 325.0
+offset_top = 110.0
+offset_right = 470.0
+offset_bottom = 360.0
 placeholder_text = "write runs here..."
+
+[node name="Notes" type="TextEdit" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 110.0
+offset_right = 775.0
+offset_bottom = 310.0
+placeholder_text = "write notes here..."
+
+[node name="NoclipAcc" type="TextEdit" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 320.0
+offset_right = 775.0
+offset_bottom = 360.0
+placeholder_text = "write noclip info here..."
+
+[node name="RemoveLevel" type="Button" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 407.0
+offset_right = 775.0
+offset_bottom = 436.0
+text = "remove level"
+
+[node name="CompletionStatus" type="CheckBox" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 157.0
+offset_right = 140.0
+offset_bottom = 181.0
+action_mode = 0
+text = "Completed"
+
+[node name="Goal" type="LineEdit" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 410.0
+offset_top = 367.0
+offset_right = -15.0004
+offset_bottom = 402.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+placeholder_text = "Goal"
+
+[node name="CurrentGoalLabel" type="Label" parent="UI/Panel/Goal"]
+layout_mode = 0
+offset_left = -233.0
+offset_top = 9.0
+offset_right = -7.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 30
+text = "Current Goal:"
+
+[node name="Type" type="OptionButton" parent="UI/Panel"]
+layout_mode = 0
+offset_left = 18.0004
+offset_top = 186.0
+offset_right = 158.0
+offset_bottom = 206.0
+selected = 0
+item_count = 4
+popup/item_0/text = "New Hardest"
+popup/item_1/text = "Verification"
+popup/item_1/id = 1
+popup/item_2/text = "Side Project"
+popup/item_2/id = 2
+popup/item_3/text = "Misc."
+popup/item_3/id = 3
 
 [node name="Button" type="Button" parent="UI/Panel"]
 layout_mode = 0
-offset_left = 625.0
-offset_top = 339.0
-offset_right = 775.0
-offset_bottom = 368.0
-text = "remove level"
-
-[node name="TextureRect" type="TextureRect" parent="UI/Panel"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 16.0
-offset_right = 184.0
+offset_left = 25.0004
+offset_top = 130.0
+offset_right = 147.0
 offset_bottom = 149.0
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("11_by1pi")
+text = "Change Image"
 
-[node name="CheckBox" type="CheckBox" parent="UI/Panel"]
-visible = false
-layout_mode = 0
-offset_left = 24.0
-offset_top = 121.0
-offset_right = 140.0
-offset_bottom = 145.0
-text = "Completed"
+[node name="FileDialog" type="FileDialog" parent="UI/Panel/Button"]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(1152, 648)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
 
 [node name="TextureButton" type="TextureButton" parent="UI"]
 layout_mode = 1
@@ -235,9 +328,16 @@ autowrap_mode = 3
 script = ExtResource("15_meqs7")
 
 [connection signal="button_down" from="UI/Panel/BorderTop/CreditsButton" to="." method="_open_credits_window"]
-[connection signal="text_changed" from="UI/Panel/LineEdit" to="." method="_on_change_title"]
-[connection signal="text_changed" from="UI/Panel/TextEdit" to="." method="_on_text_edit_text_changed"]
-[connection signal="pressed" from="UI/Panel/Button" to="." method="_remove_level"]
-[connection signal="pressed" from="UI/Panel/CheckBox" to="." method="_on_complete_check_box_pressed"]
+[connection signal="text_changed" from="UI/Panel/LevelName" to="." method="_on_change_title"]
+[connection signal="text_changed" from="UI/Panel/Creators" to="." method="_on_change_creator"]
+[connection signal="text_changed" from="UI/Panel/Runs" to="." method="_on_text_edit_text_changed"]
+[connection signal="text_changed" from="UI/Panel/Notes" to="." method="_on_notes_text_changed"]
+[connection signal="text_changed" from="UI/Panel/NoclipAcc" to="." method="_on_noclip_acc_text_changed"]
+[connection signal="pressed" from="UI/Panel/RemoveLevel" to="." method="_remove_level"]
+[connection signal="toggled" from="UI/Panel/CompletionStatus" to="." method="_on_complete_check_box_toggled"]
+[connection signal="text_changed" from="UI/Panel/Goal" to="." method="_on_change_goal"]
+[connection signal="item_selected" from="UI/Panel/Type" to="." method="_on_type_item_selected"]
+[connection signal="pressed" from="UI/Panel/Button" to="." method="_on_open_filedialog"]
+[connection signal="file_selected" from="UI/Panel/Button/FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="UI/TextureButton" to="." method="_add_level"]
 [connection signal="pressed" from="UI/LevelsList/VBoxContainer/levelButton" to="UI/LevelsList/VBoxContainer/levelButton" method="_on_press"]

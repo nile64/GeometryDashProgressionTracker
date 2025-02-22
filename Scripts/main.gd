@@ -4,8 +4,14 @@ var defaultSave = {
 	"levels": [
 		{
 			"level_name": "",
+			"creator": "",
 			"runs": "",
-			"completed": false
+			"completed": false,
+			"goal": "",
+			"lvlType": 0,
+			"notes": "",
+			"noclip": "",
+			"image_path": "res://Difficulties/extremeDemon.png"
 		}
 	]
 }
@@ -14,6 +20,8 @@ var data = {}
 
 var buttons = []
 var selected_level = 0
+
+var delay = 0.1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,15 +33,49 @@ func _ready():
 		data = defaultSave
 		save_file(data)
 	
+	_check_valid_save()
+	
 	buttons.append($UI/LevelsList/VBoxContainer/levelButton)
 	
 	$UI/LevelsList/VBoxContainer/levelButton.text = data["levels"][0].level_name
-	$UI/Panel/LineEdit.text = data["levels"][0].level_name
-	$UI/Panel/TextEdit.text = data["levels"][0].runs
+	_refresh()
 	
 	for i in range(1, data["levels"].size()):
-		_add_level_at_beginning(i)
+		_add_level_on_launch(i)
 
+func _refresh():
+	$UI/Panel/LevelName.text = data["levels"][selected_level].level_name
+	$UI/Panel/Runs.text = data["levels"][selected_level].runs
+	$UI/Panel/CompletionStatus.button_pressed = data["levels"][selected_level].completed
+	$UI/Panel/Creators.text = data["levels"][selected_level].creator
+	$UI/Panel/Goal.text = data["levels"][selected_level].goal
+	$UI/Panel/Type.selected = data["levels"][selected_level].lvlType
+	$UI/Panel/Notes.text = data["levels"][selected_level].notes
+	$UI/Panel/NoclipAcc.text = data["levels"][selected_level].noclip
+	$UI/Panel/TextureRect.texture = load(data["levels"][selected_level].image_path)
+
+# basically just to check if ur save has every key that it needs to prevent crashes or save corruption
+func _check_valid_save():
+	for i in range(data["levels"].size()):
+		if !data["levels"][i].has("level_name"):
+			data["levels"][i].level_name = ""
+		if !data["levels"][i].has("creator"):
+			data["levels"][i].creator = ""
+		if !data["levels"][i].has("runs"):
+			data["levels"][i].runs = ""
+		if !data["levels"][i].has("completed"):
+			data["levels"][i].completed = false
+		if !data["levels"][i].has("goal"):
+			data["levels"][i].runs = ""
+		if !data["levels"][i].has("lvlType"):
+			data["levels"][i].lvlType = 0
+		if !data["levels"][i].has("notes"):
+			data["levels"][i].notes = ""
+		if !data["levels"][i].has("noclip"):
+			data["levels"][i].noclip = ""
+		if !data["levels"][i].has("image_path"):
+			data["levels"][i].image_path = "res://Difficulties/extremeDemon.png"
+			
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -88,14 +130,29 @@ func _add_level():
 	lvlButton.text = ""
 	
 	buttons.append(lvlButton)
-	data["levels"].append({"level_name":"", "runs":""})
+	data["levels"].append(
+		{
+			"level_name": "",
+			"creator": "",
+			"runs": "",
+			"completed": false,
+			"goal": "",
+			"lvlType": 0,
+			"notes": "",
+			"noclip": "",
+			"image_path": "res://Difficulties/extremeDemon.png"
+		}
+	)
 	
 	save_file(data)
 
-func _add_level_at_beginning(panel_num : int):
+func _add_level_on_launch(panel_num : int):
 	var lvlButton = $UI/LevelsList/VBoxContainer/levelButton.duplicate()
 	$UI/LevelsList/VBoxContainer.add_child(lvlButton)
 	lvlButton.text = data["levels"][panel_num].level_name
+	lvlButton.queue_redraw()
+	await get_tree().process_frame
+	lvlButton.set_size(lvlButton.get_minimum_size())
 	
 	buttons.append(lvlButton)
 	
@@ -110,14 +167,12 @@ func _remove_level():
 	buttons[selected_level].queue_free()
 	buttons.remove_at(selected_level)
 	selected_level = 0
-	$UI/Panel/LineEdit.text = data["levels"][selected_level].level_name
-	$UI/Panel/TextEdit.text = data["levels"][selected_level].runs
+	_refresh()
 
 func _level_button_press(btn : Button):
 	selected_level = buttons.find(btn)
 	print(selected_level)
-	$UI/Panel/LineEdit.text = data["levels"][selected_level].level_name
-	$UI/Panel/TextEdit.text = data["levels"][selected_level].runs
+	_refresh()
 
 
 func _on_change_title(new_text):
@@ -127,10 +182,48 @@ func _on_change_title(new_text):
 
 
 func _on_text_edit_text_changed():
-	data["levels"][selected_level].runs = $UI/Panel/TextEdit.text
+	data["levels"][selected_level].runs = $UI/Panel/Runs.text
 	save_file(data)
 
 
 func _on_complete_check_box_pressed():
-	data["levels"][selected_level].completed = $UI/Panel/CheckBox.toggle_mode
+	data["levels"][selected_level].completed = $UI/Panel/CompletionStatus.toggle_mode
+	save_file(data)
+
+
+func _on_complete_check_box_toggled(toggled_on):
+	data["levels"][selected_level].completed = toggled_on
+	save_file(data)
+
+func _on_change_creator(new_text):
+	data["levels"][selected_level].creator = new_text
+	save_file(data)
+
+func _on_change_goal(new_text):
+	data["levels"][selected_level].goal = new_text
+	save_file(data)
+
+
+func _on_type_item_selected(index):
+	data["levels"][selected_level].lvlType = index
+	save_file(data)
+
+
+func _on_noclip_acc_text_changed():
+	data["levels"][selected_level].noclip = $UI/Panel/NoclipAcc.text
+	save_file(data)
+
+func _on_notes_text_changed():
+	data["levels"][selected_level].notes = $UI/Panel/Notes.text
+	save_file(data)
+
+
+func _on_open_filedialog():
+	$UI/Panel/Button/FileDialog.popup()
+
+
+func _on_file_dialog_file_selected(path):
+	print(path)
+	$UI/Panel/TextureRect.texture = load(path)
+	data["levels"][selected_level].image_path = path
 	save_file(data)
